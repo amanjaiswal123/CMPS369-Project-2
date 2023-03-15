@@ -1,0 +1,13 @@
+# Default ignored files
+/shelf/
+/.idea/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+/dataSources/804664b2-888f-44dc-991d-f2673bc482c1.xml
+/dataSources.local.xml
+/dataSources.xml
+/jsLibraryMappings.xml
+/modules.xml
+/project2.iml
+/vcs.xml
+/.idea/dataSources.local.xml
