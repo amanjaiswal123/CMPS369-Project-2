@@ -1,5 +1,5 @@
 const assert = require('assert');
-const sqlite = require('sqlite-async');
+const sqlite = require('sqlite3')
 
 class DataStore {
     constructor() {
@@ -9,7 +9,12 @@ class DataStore {
     }
 
     async connect() {
-        this.db = await sqlite.open(this.path);
+        this.db = await new sqlite.Database('./identifier.sqlite', (err) => {
+            if (err) {
+                console.error(err.message);
+            }
+            console.log('Connected to the database.');
+        });
     }
 
     async create(table, data) {
@@ -45,4 +50,3 @@ class DataStore {
 }
 
 module.exports = DataStore;
-

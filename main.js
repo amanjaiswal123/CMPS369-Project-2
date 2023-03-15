@@ -1,11 +1,16 @@
-const http = require('http');
+const pug = require('pug');
 const url = require('url');
+const express = require('express');
+const Database = require('./db');
+require('dotenv').config();
 
 
+const app = express();
+app.set('view engine', 'pug');
+
+const db = new Database();
+db.connect();
 const serve = (req, res) => {
-
-
-
     const heading = (title) => {
         let html;
         html = `
@@ -50,4 +55,8 @@ const serve = (req, res) => {
     res.end();
 }
 
-http.createServer(serve).listen(3000);
+
+app.use('/', serve)
+app.listen(3000, () => {
+    console.log(`Example app listening on port 3000`)
+})
