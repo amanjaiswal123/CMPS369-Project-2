@@ -7,10 +7,12 @@ require('dotenv').config();
 
 const app = express();
 app.set('view engine', 'pug');
+const notfound = pug.compileFile('./views/404notfound.pug')
+
 
 const db = new Database();
 db.connect();
-const serve = (req, res) => {
+const notfound404 = (req, res) => {
     const heading = (title) => {
         let html;
         html = `
@@ -33,30 +35,22 @@ const serve = (req, res) => {
     </html>
     `;
     }
-    function urlNotFound() {
-        return heading('404 Not Found') + `<title>404 Page Not Found</title>
-        <div className="container">
-            <h1>404 Page Not Found</h1>
-            <p>Sorry, the page you are looking for could not be found. Please check the URL and try again, or click <a
-                href="/">here</a> to go back to the home page.</p>
-        </div>`;
+
+    const render = (res, html) =>{
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.write(html);
+        res.end();
     }
 
 
-    const uri = url.parse(req.url).pathname;
-    let page_ = uri.split('/').splice(1);
-    page_.shift()
-    let html = "";
-    html += urlNotFound();
-
+    let html = heading("404 Not Found");
+    html += notfound()
     html += footing()
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write(html);
-    res.end();
+    render(res, html)
 }
 
 
-app.use('/', serve)
+app.use('/', notfound404)
 app.listen(3000, () => {
     console.log(`Example app listening on port 3000`)
 })
