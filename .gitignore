@@ -11,3 +11,6 @@
 /project2.iml
 /vcs.xml
 /.idea/dataSources.local.xml
+/node_modules/
+/.idea/
+/package-lock.json
