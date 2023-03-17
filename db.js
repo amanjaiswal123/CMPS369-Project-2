@@ -68,7 +68,7 @@ class DataStore {
      *  Query is an array of column/value pairs
      */
 
-    async add_contact(first_name, last_name, phone, email, street, city, state, zip, country, contact_by_email, contact_by_phone) {
+    async add_contact(first_name, last_name, phone, email, street, city, state, zip, country, contact_by_email, contact_by_phone, contact_by_mail_num) {
         const contactData = [
             { column: 'first_name', value: first_name },
             { column: 'last_name', value: last_name },
@@ -81,6 +81,7 @@ class DataStore {
             { column: 'country', value: country },
             { column: 'contact_by_email', value: contact_by_email },
             { column: 'contact_by_phone', value: contact_by_phone },
+            { column: 'contact_by_mail', value: contact_by_mail_num },
         ];
 
         return await this.create('contacts', contactData);

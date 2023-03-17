@@ -15,7 +15,8 @@ block content
         tbody
             each row in data
                 tr
-                    td= row['first_name']+" "+row['last_name']
+                td
+                    a(href='/' + row['id'])= row['first_name'] + ' ' + row['last_name']
                     td= row['phone']
                     td= row['email']
                     td= (row['street']+" "+row['city']+", "+row['state']+" "+row['zip']+" "+row['country'])
@@ -27,6 +28,10 @@ block content
                         label(for='mail4')
                             input(type='checkbox', id='mail4', disabled, checked=row['contact_by_email'] == 1, onclick='return false;')
                             | Email
+                        br
+                        label(for='mail4')
+                            input(type='checkbox', id='mail4', disabled, checked=row['contact_by_mail'] == 1, onclick='return false;')
+                            | Mail
 
 
 
