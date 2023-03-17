@@ -1,5 +1,5 @@
 const assert = require('assert');
-const sqlite = require('sqlite-async');
+const sqlite = require('sqlite3');
 
 class DataStore {
     constructor() {
@@ -7,14 +7,50 @@ class DataStore {
         this.path = process.env.DBPATH;
         assert(this.path !== undefined, "DBPATH not specified in environment.");
     }
-
     async connect() {
-        this.db = await sqlite.open(this.path);
+        this.db = await new Promise((resolve, reject) => {
+            const db = new sqlite.Database(this.path, (err) => {
+                if (err) {
+                    console.error(err.message);
+                    reject(err);
+                } else {
+                    console.log('Connected to the database.');
+                    resolve(db);
+                }
+            });
+        });
+    }
+
+    async get_all_rows(table) {
+        const sql = `SELECT * FROM ${table}`;
+        const result = await new Promise((resolve, reject) => {
+            this.db.all(sql, (err, rows) => {
+                if (err) {
+                    console.error("Error executing query:", err.message);
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
+        return result;
     }
 
     async find_records(table, row) {
         const query = Object.keys(row).map(key => ({ column: key, value: row[key] }));
-        const result = await this.read(table, query);
+        const conditions = query.map(({ column }) => `${column} = ?`).join(' AND ');
+        const values = query.map(({ value }) => value);
+        const sql = `SELECT * FROM ${table} WHERE ${conditions}`;
+        const result = await new Promise((resolve, reject) => {
+            this.db.all(sql, values, (err, rows) => {
+                if (err) {
+                    console.error("Error executing query:", err.message);
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
         return result;
     }
 
@@ -31,23 +67,6 @@ class DataStore {
     /** This is limited to supporting direct match query parameters.
      *  Query is an array of column/value pairs
      */
-    async read(table, query) {
-        let sql = `SELECT * from ${table}`;
-        if (query.length > 0) {
-            sql += ` WHERE ${query.map(d => `${d.column} = ?`).join(' and ')}`
-        }
-        console.log(sql, query.map(d => d.value));
-        return await this.db.all(
-            sql, query.map(d => d.value)
-        );
-    }
-
-    async update(table, data, query) {
-        let sql = `UPDATE ${table} set ${data.map(d => `${d.column}=?`)} where ${query.map(d => `${d.column} = ?`).join(' and ')}`;
-        const _data = data.map(d => d.value).concat(query.map(q => q.value));
-        console.log(sql, _data);
-        return await this.db.run(sql, _data)
-    }
 
     async add_contact(first_name, last_name, phone, email, street, city, state, zip, country, contact_by_email, contact_by_phone) {
         const contactData = [
