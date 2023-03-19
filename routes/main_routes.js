@@ -28,12 +28,20 @@ router.post('/create', function(req, res) {
 });
 
 router.post('/signup',  async function (req, res) {
-    const {first, last, username, password} = req.body;
+    const {first, last, username, password, c_password} = req.body;
+    if (password != c_password){
+        res.render('signup.pug', {message:'Passwords do not match'})
+        return
+    }
+    const same_user = await req.db.find_records('users',{'username':username})
+    if (same_user.length > 0){
+        res.render('signup.pug', {message:'Username Already Taken'})
+        return
+    }
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
     const id = req.db.create_user(first, last, username, hash);
-    req.session.user = await req.db.find_records('users', {'id': id});
-    res.redirect('/');
+    res.redirect('/login');
 });
 router.post('/login', async function (req, res) {
     const username = req.body.username;
@@ -48,7 +56,7 @@ router.post('/login', async function (req, res) {
         req.session.user = user;
         res.redirect('/');
     } else {
-        res.render('login.pug', {message: 'Invalid username or password'});
+        res.render('login.pug', {message: 'Invalid Username or Password'});
     }
 });
 router.get('/:id', async (req, res) => {

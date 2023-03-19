@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const startup =  async () => {
     await db.connect();
+    await db.intialize()
 }
 
 

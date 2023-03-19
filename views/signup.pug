@@ -18,10 +18,14 @@ block content
                 label(for='password') Password
                 input(name='password' type='password' required)
             section
-                label(for='password2') Confirm Password
-                input(name='password2' type='password' required)
+                label(for='c_password') Confirm Password
+                input(name='c_password' type='password' required)
                 hr
             button(type='submit') Sign up
             a(href='/') Nevermind
+            if message
+                p= message
             section
-                p Already have an account? <a(href='/login') Sign in here!</a>
+                p
+                |Already have an account?
+                a(href='/login')  Sign in here!

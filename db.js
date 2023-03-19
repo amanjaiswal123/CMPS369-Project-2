@@ -21,21 +21,6 @@ class DataStore {
         });
     }
 
-    async get_all_rows(table) {
-        const sql = `SELECT * FROM ${table}`;
-        const result = await new Promise((resolve, reject) => {
-            this.db.all(sql, (err, rows) => {
-                if (err) {
-                    console.error("Error executing query:", err.message);
-                    reject(err);
-                } else {
-                    resolve(rows);
-                }
-            });
-        });
-        return result;
-    }
-
     async find_records(table, row) {
         const query = Object.keys(row).map(key => ({ column: key, value: row[key] }));
         const conditions = query.map(({ column }) => `${column} = ?`).join(' AND ');
@@ -63,6 +48,45 @@ class DataStore {
             data.map(d => d.value));
         return result.lastID;
     }
+
+
+    async create_user(first_name, last_name, username, password, c_password) {
+        const user_data = [
+            { column: 'first_name', value: first_name },
+            { column: 'last_name', value: last_name },
+            { column: 'username', value: username },
+            { column: 'password', value: password },
+        ];
+        return await this.create('users', user_data);
+    }
+
+    async intialize(){
+        const user = await this.find_records('users',{'username':'cmps369'})
+        if (user.length > 0){
+            return
+        }
+        else{
+            this.create_user('CMPS','369','cmps369','rcnj')
+        }
+    }
+
+    async get_all_rows(table) {
+        const sql = `SELECT * FROM ${table}`;
+        const result = await new Promise((resolve, reject) => {
+            this.db.all(sql, (err, rows) => {
+                if (err) {
+                    console.error("Error executing query:", err.message);
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
+        return result;
+    }
+
+
+
 
     /** This is limited to supporting direct match query parameters.
      *  Query is an array of column/value pairs
@@ -120,15 +144,7 @@ class DataStore {
         return await this.edit('contacts', contactData, id);
     }
 
-    async create_user(first_name, last_name, username, password, c_password) {
-        const user_data = [
-            { column: 'first_name', value: first_name },
-            { column: 'last_name', value: last_name },
-            { column: 'username', value: username },
-            { column: 'password', value: password },
-        ];
-        return await this.create('users', user_data);
-    }
+
     async delete_row(table, id) {
         const result = await this.db.run(`DELETE FROM ${table} WHERE id = ?`, id);
         return result;
