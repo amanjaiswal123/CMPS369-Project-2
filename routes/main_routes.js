@@ -24,7 +24,7 @@ router.post('/create', function(req, res) {
     req.db.add_contact(first, last, phone, email, street, city, state, zip, country, contact_by_email_num, contact_by_phone_num, contact_by_mail_num);
 
     // Send a response to the client
-    res.send('Contact added successfully');
+    res.redirect('/')
 });
 
 router.post('/signup',  async function (req, res) {

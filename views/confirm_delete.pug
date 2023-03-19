@@ -3,7 +3,7 @@ extends layout
 block content
     body
         h1 Delete Contact
-        h2= (data['first_name']+data['last_name'])
+        h2= (data['first_name']+' '+data['last_name'])
         p Are you sure you want to delete this contact?
         form(action='/'+data[id]+'/delete', method='post')
             button(type='submit') Yes!
