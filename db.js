@@ -86,6 +86,16 @@ class DataStore {
 
         return await this.create('contacts', contactData);
     }
+
+    async create_user(first_name, last_name, username, password, c_password) {
+        const user_data = [
+            { column: 'first_name', value: first_name },
+            { column: 'last_name', value: last_name },
+            { column: 'username', value: username },
+            { column: 'password', value: password },
+        ];
+        return await this.create('users', user_data);
+    }
     async delete_row(table, id) {
         const result = await this.db.run(`DELETE FROM ${table} WHERE id = ?`, id);
         return result;

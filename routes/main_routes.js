@@ -1,12 +1,11 @@
 const express = require('express')
 const pug = require("pug");
+const bcrypt = require('bcrypt')
 const router = express.Router();
 
 
 router.get('/', async (req, res) => {
-
     const result = await req.db.get_all_rows('contacts');
-
     res.render('home', {title: "Home", data: result})
 })
 router.get('/login', (req, res) => res.render('login', {title: "Login"}))
@@ -29,11 +28,30 @@ router.post('/create', function(req, res) {
     // Send a response to the client
     res.send('Contact added successfully');
 });
+
+router.post('/signup',  async function (req, res) {
+    const {first, last, username, password} = req.body;
+    const salt = bcrypt.genSaltSync(10);
+    console.log(salt)
+    console.log(password);
+    const hash = bcrypt.hashSync(password, salt);
+    const id = req.db.create_user(first, last, username, hash);
+    req.session.user = await req.db.find_records('users', {'id': id});
+    res.redirect('/');
+});
+router.post('/login', function(req, res) {
+    const salt = bcrypt.genSalt(10);
+    const hash = bcrypt.hashSync(p1, salt)
+//    await req.db.createuser(email,hash);
+});
 router.get('/:id', async (req, res) => {
 
     const result = await req.db.find_records('contacts',{'id':req.params.id});
     res.render('id', {title: "ID", data: result[0]})
 })
+
+
+
 router.get('/:id/edit', (req, res) => res.render('id_edit', {title: "Edit ID"}))
 router.get('/:id/delete', (req, res) => res.render('id_delete', {title: "Delete ID"}))
 
