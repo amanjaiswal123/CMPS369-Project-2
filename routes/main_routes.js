@@ -39,10 +39,21 @@ router.post('/signup',  async function (req, res) {
     req.session.user = await req.db.find_records('users', {'id': id});
     res.redirect('/');
 });
-router.post('/login', function(req, res) {
-    const salt = bcrypt.genSalt(10);
-    const hash = bcrypt.hashSync(p1, salt)
-//    await req.db.createuser(email,hash);
+router.post('/login', async function (req, res) {
+    const username = req.body.username;
+    const password = req.body.password;
+    const users = await req.db.find_records('users', {'username': username});
+    if (users.length === 0) {
+        res.render('login.pug', {error: 'Invalid username or password'});
+        return;
+    }
+    const user = users[0];
+    if (bcrypt.compareSync(password,user.password)) {
+        req.session.user = user;
+        res.redirect('/');
+    } else {
+        res.render('login.pug', {error: 'Invalid username or password'});
+    }
 });
 router.get('/:id', async (req, res) => {
 
