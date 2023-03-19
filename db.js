@@ -87,6 +87,39 @@ class DataStore {
         return await this.create('contacts', contactData);
     }
 
+    async edit(table, data, id) {
+        const values = data.map(d => d.value);
+        const placeholders = data.map(() => '?').join(',');
+        const sql = `UPDATE ${table} SET ${data.map(d => `${d.column} = ?`).join(',')} WHERE id = ?`;
+        const params = [...values, id];
+
+        this.db.run(sql, params, (err) => {
+            if (err) {
+                console.error(err.message);
+            } else {
+                console.log(`Row ${id} updated successfully`);
+            }
+        });
+    }
+
+    async edit_contact(id, first_name, last_name, phone, email, street, city, state, zip, country, contact_by_email, contact_by_phone, contact_by_mail_num) {
+        const contactData = [
+            { column: 'first_name', value: first_name },
+            { column: 'last_name', value: last_name },
+            { column: 'phone', value: phone },
+            { column: 'email', value: email },
+            { column: 'street', value: street },
+            { column: 'city', value: city },
+            { column: 'state', value: state },
+            { column: 'zip', value: zip },
+            { column: 'country', value: country },
+            { column: 'contact_by_email', value: contact_by_email },
+            { column: 'contact_by_phone', value: contact_by_phone },
+            { column: 'contact_by_mail', value: contact_by_mail_num },
+        ];
+        return await this.edit('contacts', contactData, id);
+    }
+
     async create_user(first_name, last_name, username, password, c_password) {
         const user_data = [
             { column: 'first_name', value: first_name },

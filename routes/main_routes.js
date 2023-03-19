@@ -17,8 +17,6 @@ router.post('/create', function(req, res) {
     const contact_by_email_num = contact_by_email === "on" ? 1 : 0;
     const contact_by_mail_num = contact_by_mail === "on" ? 1 : 0;
 
-    console.log(contact_by_mail);
-    console.log(contact_by_mail_num);
 
 
 
@@ -32,8 +30,6 @@ router.post('/create', function(req, res) {
 router.post('/signup',  async function (req, res) {
     const {first, last, username, password} = req.body;
     const salt = bcrypt.genSaltSync(10);
-    console.log(salt)
-    console.log(password);
     const hash = bcrypt.hashSync(password, salt);
     const id = req.db.create_user(first, last, username, hash);
     req.session.user = await req.db.find_records('users', {'id': id});
@@ -63,8 +59,42 @@ router.get('/:id', async (req, res) => {
 
 
 
-router.get('/:id/edit', (req, res) => res.render('id_edit', {title: "Edit ID"}))
-router.get('/:id/delete', (req, res) => res.render('id_delete', {title: "Delete ID"}))
+router.get('/:id/delete', async (req, res) => {
+    if (req.session.user){
+        const result = await req.db.find_records('contacts', {'id': req.params.id});
+        res.render('id_delete', {title: "ID", data: result[0]});
+    }
+    else{
+        res.render('not_authorized.pug')
+    }
 
 
+})
+
+router.post('/:id/delete', async function (req, res) {
+    const {delete_} = req.body;
+    await req.db.delete_row('contacts', req.params.id)
+    res.redirect('/');
+});
+router.get('/:id/edit', async (req, res) => {
+    if (req.session.user) {
+        const result = await req.db.find_records('contacts', {'id': req.params.id});
+        res.render('id_edit', {title: "ID", data: result[0]})
+    }
+    else{
+        res.render('not_authorized.pug')
+    }
+})
+
+router.post('/:id/edit', function(req, res) {
+    const { first, last, phone, email, street, city, state, zip, country, contact_by_phone, contact_by_email, contact_by_mail} = req.body;
+    const contact_by_phone_num = contact_by_phone === "on" ? 1 : 0;
+    const contact_by_email_num = contact_by_email === "on" ? 1 : 0;
+    const contact_by_mail_num = contact_by_mail === "on" ? 1 : 0;
+
+    // Call the add_contact function with the input values
+    req.db.edit_contact(req.params.id, first, last, phone, email, street, city, state, zip, country, contact_by_email_num, contact_by_phone_num, contact_by_mail_num);
+
+    res.redirect('/'+req.params.id)
+});
 module.exports = router;

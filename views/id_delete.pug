@@ -1,4 +1,10 @@
 extends layout.pug
 
 block content
-    head ID delete
+    body
+        h1 Delete Contact
+        h2= (data['first_name']+data['last_name'])
+        p Are you sure you want to delete this contact?
+        form(action="/"+data['id']+"/delete", method="post")
+            button(type="submit", name='delete_') Yes!
+            a(href="/"+data['id']) Nevermind

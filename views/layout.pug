@@ -4,7 +4,9 @@ html(lang="ENGLISH")
         title #{title}
         link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css")
         if user
-            span Logged in: #{user.email}
+            span #{user.email}
+            a(href='/signout') Sign Out
+
         else
             a(href='/login') Sign In
         body
