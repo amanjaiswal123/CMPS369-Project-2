@@ -40,7 +40,7 @@ router.post('/login', async function (req, res) {
     const password = req.body.password;
     const users = await req.db.find_records('users', {'username': username});
     if (users.length === 0) {
-        res.render('login.pug', {error: 'Invalid username or password'});
+        res.render('login.pug', {message: 'Invalid username or password'});
         return;
     }
     const user = users[0];
@@ -48,7 +48,7 @@ router.post('/login', async function (req, res) {
         req.session.user = user;
         res.redirect('/');
     } else {
-        res.render('login.pug', {error: 'Invalid username or password'});
+        res.render('login.pug', {message: 'Invalid username or password'});
     }
 });
 router.get('/:id', async (req, res) => {

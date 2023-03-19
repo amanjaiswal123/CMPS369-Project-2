@@ -12,6 +12,8 @@ block content
                 input(name="password", type="password", required)
             button(type="submit") Sign in
             a(href="/") Nevermind
+            if message
+                p= message
             section
                 p Don't have an account yet?
                     a(href="/signup")  Sign up here!
