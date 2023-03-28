@@ -2,36 +2,37 @@ extends layout.pug
 
 
 block content
-    h1 Contact List
-    a(href='/create') Create a New Contact
-    table
-        thead
-            tr
-                th Name
-                th Phone
-                th Email
-                th Address
-                th Contact
-        tbody
-            each row in data
+    div(class= 'Contacts')
+        h1 Contact List
+        a(href='/create')#ContactList Create a New Contact
+        table
+            thead
                 tr
-                td
-                    a(href='/' + row['id'])= row['first_name'] + ' ' + row['last_name']
-                    td= row['phone']
-                    td= row['email']
-                    td= (row['street']+" "+row['city']+", "+row['state']+" "+row['zip']+" "+row['country'])
+                    th Name
+                    th Phone
+                    th Email
+                    th Address
+                    th Contact
+            tbody
+                each row in data
+                    tr
                     td
-                        label(for='phone4')
-                            input(type='checkbox', id='phone4', disabled, checked=row['contact_by_phone'] == 1, onclick='return false;')
-                            | Phone
-                        br
-                        label(for='mail4')
-                            input(type='checkbox', id='mail4', disabled, checked=row['contact_by_email'] == 1, onclick='return false;')
-                            | Email
-                        br
-                        label(for='mail4')
-                            input(type='checkbox', id='mail4', disabled, checked=row['contact_by_mail'] == 1, onclick='return false;')
-                            | Mail
+                        a(href='/' + row['id'])= row['first_name'] + ' ' + row['last_name']
+                        td= row['phone']
+                        td= row['email']
+                        td= (row['street']+" "+row['city']+", "+row['state']+" "+row['zip']+" "+row['country'])
+                        td
+                            label(for='phone4', class="checkbox")
+                                input(type='checkbox', id='phone4', disabled, checked=row['contact_by_phone'] == 1, onclick='return false;')
+                                | Phone
+                            br
+                            label(for='mail4' class="checkbox")
+                                input(type='checkbox', id='mail4', disabled, checked=row['contact_by_email'] == 1, onclick='return false;')
+                                | Email
+                            br
+                            label(for='mail4' class="checkbox")
+                                input(type='checkbox', id='mail4', disabled, checked=row['contact_by_mail'] == 1, onclick='return false;')
+                                | Mail
 
 
 

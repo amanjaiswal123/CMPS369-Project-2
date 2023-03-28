@@ -1,13 +1,16 @@
 doctype html
 html(lang="ENGLISH")
-    head
+    style
+        include main.css
+    head#head
         title #{title}
-        link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css")
-        if user
-            span #{user.email}
-            a(href='/signout') Sign Out
-
-        else
-            a(href='/login') Sign In
+        div(class='navBar')
+            a(href='/') Home #{' '}
+            if user
+                div(class="signout")
+                    a(href='/signout') Sign Out #{"    "}
+                    span(class="navbaruser") #{user.username}
+            else
+                a(href='/login') Sign In
         body
         block content

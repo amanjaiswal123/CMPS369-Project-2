@@ -1,7 +1,7 @@
 extends layout.pug
 
 block content
-    body
+    div(class="centerData")
         h1 Update Contact
         form(action='/'+data['id']+'/edit', method='post')
             fieldset
@@ -37,14 +37,15 @@ block content
                     input(name='country', value=data['country'])
             fieldset
                 legend Contact Preferences
-                section
+                section(class="checkbox")
                     input(type='checkbox', name='contact_by_phone', checked=data['contact_by_phone'])
                     label(for='contact_by_phone') Contact by phone
-                section
+                section(class="checkbox")
                     input(type='checkbox', name='contact_by_email', checked=data['contact_by_email'])
                     label(for='contact_by_email') Contact by email
-                section
+                section(class="checkbox")
                     input(type='checkbox', name='contact_by_mail', checked=data['contact_by_mail'])
                     label(for='contact_by_mail') Contact by mail
-            button(type='submit') Save
-            a(href='/'+data['id']) Cancel
+            div(class="yesNo")
+                button(type='submit') Save
+                a(href='/'+data['id'], class="Cancel") Cancel

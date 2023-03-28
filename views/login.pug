@@ -1,7 +1,7 @@
 extends layout.pug
 
 block content
-    body
+    div(class="centerData")
         h1 Sign in
         form(action="/login", method="post")
             section
@@ -10,8 +10,9 @@ block content
             section
                 label(for="password") Password
                 input(name="password", type="password", required)
-            button(type="submit") Sign in
-            a(href="/") Nevermind
+            div(class="yesNo")
+                button(type="submit") Sign in
+                a(href="/", class="Cancel") Cancel
             if message
                 p= message
             section

@@ -1,36 +1,32 @@
 extends layout.pug
 
 block content
-    body
-        h1 Contact Info
-        h2= (data['first_name']+' '+data['last_name'])
-        hr
-        a(href="/") Back to list
-        p
-            b Phone number:
-            span= data['phone']
-            if data['contact_by_phone'] == 1
-                p May be contacted by phone or text
-            else
-                p May NOT be contacted by phone or text
-        hr
-        p
-            b Email address:
-            span= data['email']
-            if data['contact_by_email'] == 1
-                p May be contacted by email
-            else
-                p May NOT be contacted by phone or text
-        hr
-        p
-            b Address:
-            br
-            section= data.street + " " + data.city + ", " + data.state + " " + data.zip + " " + data.country
-            if data['contact_by_mail'] == 1
-                p May be contacted by mail
-            else
-                p May NOT be contacted by phone or text
-        hr
-        a(href="/"+data['id']+"/edit") Edit Contact
-        br
-        a(href="/"+data['id']+"/delete") Delete Contact
+    div(class="centerData")
+        div(class="id")
+            h1 Contact Info
+            h2= (data['first_name']+' '+data['last_name'])
+            a(href="/") Back to list
+            p
+                b Phone number: #{" "}
+                span= data['phone']
+                if data['contact_by_phone'] == 1
+                    p May be contacted by phone or text
+                else
+                    p May NOT be contacted by phone or text
+            p
+                b Email address: #{" "}
+                span= data['email']
+                if data['contact_by_email'] == 1
+                    p May be contacted by email
+                else
+                    p May NOT be contacted by phone or text
+            p
+                b Address: #{" "}
+                br
+                section= data.street + " " + data.city + ", " + data.state + " " + data.zip + " " + data.country
+                if data['contact_by_mail'] == 1
+                    p May be contacted by mail
+                else
+                    p May NOT be contacted by phone or text
+            a(href="/"+data['id']+"/edit") Edit Contact
+            a(href="/"+data['id']+"/delete") Delete Contact

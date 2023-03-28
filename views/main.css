@@ -1,0 +1,262 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    background-color: #8d8d8d;
+
+}
+
+#head {
+    background-color: #333;
+    color: #646464;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+a {
+    color: #363636;
+    text-decoration: none;
+}
+.centerData {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.id {
+    margin: 2vw;
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #000000;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Header styles */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+}
+
+header h1 {
+    font-size: 32px;
+    margin: 0;
+}
+
+/* Form styles */
+form {
+    margin: 2vh;
+    padding: 20px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    width: 20vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+legend {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+button {
+    margin-right: 5px;
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 4vw;
+}
+
+.addCancelCreate {
+    display: flex;
+}
+.Cancel {
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 3vw;
+}
+
+button[type="submit"]:hover {
+    background-color: #0062cc;
+}
+.Cancel:hover {
+    background-color: #c70000;
+    text-decoration: none;
+}
+
+.checkbox{
+    display: flex;
+    flex-direction: row;
+}
+
+.Contacts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Create {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Table styles */
+table {
+    width: 75%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px auto;
+}
+
+thead {
+    background-color: #f2f2f2;
+}
+
+tbody {
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    font-weight: bold;
+}
+
+td {
+    border-bottom: 1px solid #ccc;
+}
+
+tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+/* Miscellaneous styles */
+h2 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+p {
+    margin-bottom: 20px;
+}
+
+hr {
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+.navBar {
+    background-color: #333;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+/* Style the links in the navbar */
+.navBar a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+/* Add a hover effect to the links */
+.navBar a:hover {
+    color: #ddd;
+}
+.navbaruser {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    margin-left: 10px;
+}
+.navbaruser a:hover {
+    color: #ddd;
+}
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+    header h1 {
+        font-size: 24px;
+    }
+
+    form {
+        padding: 10px;
+    }
+
+    /* Hide table header on small screens */
+    thead {
+        display: none;
+    }
+
+    /* Allow table rows to wrap on small screens */
+    tr {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    /* Make table cells display as block elements on small screens */
+    th,
+    td {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 5px;
+    }
+
+    /* Hide table cells that should not be shown on small screens */
+    td:not(:first-child),
+    th:not(:first-child) {
+        display: none;
+    }
+}
+
+
+}

@@ -1,7 +1,7 @@
 extends layout.pug
 
 block content
-    body
+    div(class="centerData")
         p Please select a username, and a password. Don't worry about any password rules here, we don't really care much about protecting your information - so <code>helloworld</code> is just fine by us!
         form(action='/signup', method='post')
             section
@@ -20,9 +20,9 @@ block content
             section
                 label(for='c_password') Confirm Password
                 input(name='c_password' type='password' required)
-                hr
-            button(type='submit') Sign up
-            a(href='/') Nevermind
+            div(class="yesNo")
+                button(type='submit') Sign up
+                a(href='/', class="Cancel") Cancel
             if message
                 p= message
             section

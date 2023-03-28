@@ -1,10 +1,11 @@
 extends layout.pug
 
 block content
-    body
+    div(class="centerData")
         h1 Delete Contact
         h2= (data['first_name']+' '+data['last_name'])
         p Are you sure you want to delete this contact?
-        form(action="/"+data['id']+"/delete", method="post")
-            button(type="submit", name='delete_') Yes!
-            a(href="/"+data['id']) Nevermind
+            form(action="/"+data['id']+"/delete", method="post")
+                button(type="submit", name='delete_') Yes!
+                div(class="centerData")
+                    a(href="/"+data['id'], class="Cancel") No

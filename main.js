@@ -25,8 +25,7 @@ const startup =  async () => {
     app.use((req, res, next) => {
         if (req.session.user){
             res.locals.user = {
-                id: req.session.user.id,
-                email: req.session.user.email
+                username: req.session.user.username,
             }
         }
         next()

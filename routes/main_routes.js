@@ -43,6 +43,10 @@ router.post('/signup',  async function (req, res) {
     const id = req.db.create_user(first, last, username, hash);
     res.redirect('/login');
 });
+router.get('/signout',  async function (req, res) {
+    req.session.destroy();
+    res.redirect('/');
+});
 router.post('/login', async function (req, res) {
     const username = req.body.username;
     const password = req.body.password;
